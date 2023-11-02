@@ -13,5 +13,7 @@ namespace Api.DataBaseContext
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Blog>  Blogs { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<BlogTag> BlogTags { get; set; }
     }
 }

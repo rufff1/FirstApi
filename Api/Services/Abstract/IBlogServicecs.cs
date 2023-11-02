@@ -8,7 +8,7 @@ namespace Api.Services.Abstract
         Task<CreateBlogDTO> CreateBlog(CreateBlogDTO blog);
         Task<EditBlogDTO> EditBlog(EditBlogDTO blog);
         Task<bool> DeleteBlog(int blogId);
-        Task<List<Blog>> GetAllCategories();
+        Task<List<Blog>> GetAllBlogs();
         Task<Blog> GetBlogById(int id);
 
     }

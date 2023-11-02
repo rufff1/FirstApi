@@ -58,8 +58,10 @@ namespace Api.Services.Concrate
                 map.Name = blog.Name;
                 map.Description = blog.Description;
                 map.Author = blog.Author;
-                map.CategoryId = blog.CategoryId;
+              
+                //
 
+                map.CategoryId = blog.CategoryId;
                 var response = _mapper.Map<Blog, EditBlogDTO>(map);
 
                 await _context.SaveChangesAsync();
@@ -74,7 +76,7 @@ namespace Api.Services.Concrate
 
         }
 
-        public async Task<List<Blog>> GetAllCategories()
+        public async Task<List<Blog>> GetAllBlogs()
         {
             var result= await _context.Blogs.ToListAsync();
             if (result != null)

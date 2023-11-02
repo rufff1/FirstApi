@@ -22,7 +22,7 @@ namespace Api.Services.Concrate
             var map = _mapper.Map<CreateCategoryDTO, Category>(category);
             map.UpdateDate = DateTime.Now;
             map.CreateDate = DateTime.Now;
-            var  addedObj = _context.Categories.Add(map);
+            var  addedObj =await _context.Categories.AddAsync(map);
             var response = _mapper.Map<Category, CreateCategoryDTO>(addedObj.Entity);
 
             await  _context.SaveChangesAsync(); 
@@ -58,7 +58,13 @@ namespace Api.Services.Concrate
         public async Task<Category> GetCategoryById(int id)
         {
             var result =await _context.Categories.FirstOrDefaultAsync(x=> x.Id == id);
-            return result;
+            if (result != null)
+            {
+
+                return result;
+            }
+            return null;
+           
           
         }
 

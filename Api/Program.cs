@@ -1,7 +1,9 @@
-using Api.DataBaseContext;
+﻿using Api.DataBaseContext;
 using Api.Services.Abstract;
 using Microsoft.EntityFrameworkCore;
 using Api.Services.Concrate;
+using Api;
+using Api.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(buil
 builder.Services.AddScoped<ICategoryService,CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IBlogServicecs, BlogService>();
+builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -30,5 +33,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
 
 app.Run();

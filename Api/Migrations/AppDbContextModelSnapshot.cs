@@ -58,6 +58,35 @@ namespace Api.Migrations
                     b.ToTable("Blogs");
                 });
 
+            modelBuilder.Entity("Api.Entity.BlogTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BlogId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("BlogTags");
+                });
+
             modelBuilder.Entity("Api.Entity.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -120,6 +149,44 @@ namespace Api.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("Api.Entity.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("BlogTag", b =>
+                {
+                    b.Property<int>("BlogsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BlogsId", "TagsId");
+
+                    b.HasIndex("TagsId");
+
+                    b.ToTable("BlogTag");
+                });
+
             modelBuilder.Entity("Api.Entity.Blog", b =>
                 {
                     b.HasOne("Api.Entity.Category", "Category")
@@ -131,6 +198,25 @@ namespace Api.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("Api.Entity.BlogTag", b =>
+                {
+                    b.HasOne("Api.Entity.Blog", "Blog")
+                        .WithMany()
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Api.Entity.Tag", "Tag")
+                        .WithMany()
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Blog");
+
+                    b.Navigation("Tag");
+                });
+
             modelBuilder.Entity("Api.Entity.Product", b =>
                 {
                     b.HasOne("Api.Entity.Category", "Category")
@@ -140,6 +226,21 @@ namespace Api.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("BlogTag", b =>
+                {
+                    b.HasOne("Api.Entity.Blog", null)
+                        .WithMany()
+                        .HasForeignKey("BlogsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Api.Entity.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Api.Entity.Category", b =>

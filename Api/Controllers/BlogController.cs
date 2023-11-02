@@ -1,7 +1,10 @@
-﻿using Api.DTO.BlogDTO;
+﻿using Api.DataBaseContext;
+using Api.DTO.BlogDTO;
+using Api.Entity;
 using Api.Services.Abstract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers
 {
@@ -11,9 +14,9 @@ namespace Api.Controllers
     {
         public readonly IBlogServicecs _blogServicecs;
 
-        public BlogController(IBlogServicecs blogServicecs)
-        {
+        public BlogController(IBlogServicecs blogServicecs) { 
             _blogServicecs = blogServicecs;
+            
         }
 
 
@@ -57,7 +60,7 @@ namespace Api.Controllers
         [HttpGet("GetAllBlogs")]
         public async Task<IActionResult> GetAllBlogs()
         {
-            var result = await _blogServicecs.GetAllCategories();
+            var result = await _blogServicecs.GetAllBlogs();
             return Ok(result);
         }
 
@@ -83,8 +86,17 @@ namespace Api.Controllers
         [HttpDelete("DeleteBlog")]
         public async Task<IActionResult> DeleteBlog(int id)
         {
-            var result = await _blogServicecs.DeleteBlog(id);
-            return Ok(result);
+                var result = await _blogServicecs.DeleteBlog(id);
+            try
+            {
+                return StatusCode(200, "Blog Ugurla Silindi");
+            }
+            catch (Exception ex)
+            {
+                   return StatusCode(500, $"{ex.Message}Yalnis melumat");
+
+            }
+            return null;
         }
     }
 

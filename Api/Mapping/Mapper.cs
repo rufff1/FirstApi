@@ -1,6 +1,7 @@
 ﻿using Api.DTO.CategoryDTO;
 using Api.DTO.ProductDTO;
 using Api.DTO.BlogDTO;
+using Api.DTO.TagDTO;
 
 using Api.Entity;
 using AutoMapper;
@@ -22,6 +23,10 @@ namespace Api.Mapping
             //Blog Mapping
             CreateMap<Blog , CreateBlogDTO>().ReverseMap();
             CreateMap<Blog, EditBlogDTO>().ReverseMap();
+
+            //Tag Mapping
+            CreateMap<Tag, CreateTagDTO>().ReverseMap();
+            CreateMap<Tag, EditBlogDTO>().ReverseMap();
           
 
 

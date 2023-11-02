@@ -1,4 +1,8 @@
 ﻿using Api.Entity.Base;
+using Api.DataBaseContext;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.OpenApi;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Api.Entity
 {
@@ -13,5 +17,11 @@ namespace Api.Entity
         public int CategoryId {  get; set; }
         public virtual Category Category { get; set; }
 
+        public ICollection<Tag> Tags {  get; set; } 
+
+
+
     }
+
+
 }
