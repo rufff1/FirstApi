@@ -6,11 +6,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Api.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateTagTableAndBlogRelation : Migration
+    public partial class CreateTagTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<int>(
+                name: "TagId",
+                table: "Blogs",
+                type: "int",
+                nullable: true);
+
             migrationBuilder.CreateTable(
                 name: "Tags",
                 columns: table => new
@@ -24,30 +30,6 @@ namespace Api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tags", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BlogTag",
-                columns: table => new
-                {
-                    BlogsId = table.Column<int>(type: "int", nullable: false),
-                    TagsId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BlogTag", x => new { x.BlogsId, x.TagsId });
-                    table.ForeignKey(
-                        name: "FK_BlogTag_Blogs_BlogsId",
-                        column: x => x.BlogsId,
-                        principalTable: "Blogs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BlogTag_Tags_TagsId",
-                        column: x => x.TagsId,
-                        principalTable: "Tags",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,9 +61,9 @@ namespace Api.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BlogTag_TagsId",
-                table: "BlogTag",
-                column: "TagsId");
+                name: "IX_Blogs_TagId",
+                table: "Blogs",
+                column: "TagId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BlogTags_BlogId",
@@ -92,19 +74,35 @@ namespace Api.Migrations
                 name: "IX_BlogTags_TagId",
                 table: "BlogTags",
                 column: "TagId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Blogs_Tags_TagId",
+                table: "Blogs",
+                column: "TagId",
+                principalTable: "Tags",
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "BlogTag");
+            migrationBuilder.DropForeignKey(
+                name: "FK_Blogs_Tags_TagId",
+                table: "Blogs");
 
             migrationBuilder.DropTable(
                 name: "BlogTags");
 
             migrationBuilder.DropTable(
                 name: "Tags");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Blogs_TagId",
+                table: "Blogs");
+
+            migrationBuilder.DropColumn(
+                name: "TagId",
+                table: "Blogs");
         }
     }
 }

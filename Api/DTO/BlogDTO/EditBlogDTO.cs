@@ -1,4 +1,6 @@
-﻿namespace Api.DTO.BlogDTO
+﻿using Api.Entity;
+
+namespace Api.DTO.BlogDTO
 {
     public class EditBlogDTO
     {
@@ -8,6 +10,10 @@
         public string Author { get; set; }
 
 
+
         public int CategoryId { get; set; }
+        public List<int> TagId { get; set; }   
+       // public ICollection<BlogTag> BlogTags { get; set; }
+
     }
 }

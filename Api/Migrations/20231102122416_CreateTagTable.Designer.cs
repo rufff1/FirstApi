@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231102092954_CreateTagTableAndBlogRelation")]
-    partial class CreateTagTableAndBlogRelation
+    [Migration("20231102122416_CreateTagTable")]
+    partial class CreateTagTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,12 +51,17 @@ namespace Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TagId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("TagId");
 
                     b.ToTable("Blogs");
                 });
@@ -175,21 +180,6 @@ namespace Api.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("BlogTag", b =>
-                {
-                    b.Property<int>("BlogsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TagsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("BlogsId", "TagsId");
-
-                    b.HasIndex("TagsId");
-
-                    b.ToTable("BlogTag");
-                });
-
             modelBuilder.Entity("Api.Entity.Blog", b =>
                 {
                     b.HasOne("Api.Entity.Category", "Category")
@@ -198,13 +188,17 @@ namespace Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Api.Entity.Tag", null)
+                        .WithMany("Blogs")
+                        .HasForeignKey("TagId");
+
                     b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Api.Entity.BlogTag", b =>
                 {
                     b.HasOne("Api.Entity.Blog", "Blog")
-                        .WithMany()
+                        .WithMany("BlogTags")
                         .HasForeignKey("BlogId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -231,19 +225,9 @@ namespace Api.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("BlogTag", b =>
+            modelBuilder.Entity("Api.Entity.Blog", b =>
                 {
-                    b.HasOne("Api.Entity.Blog", null)
-                        .WithMany()
-                        .HasForeignKey("BlogsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Api.Entity.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("BlogTags");
                 });
 
             modelBuilder.Entity("Api.Entity.Category", b =>
@@ -251,6 +235,11 @@ namespace Api.Migrations
                     b.Navigation("Blogs");
 
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Api.Entity.Tag", b =>
+                {
+                    b.Navigation("Blogs");
                 });
 #pragma warning restore 612, 618
         }

@@ -2,6 +2,7 @@
 using Api.Services.Abstract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers
 {
@@ -20,7 +21,10 @@ namespace Api.Controllers
         public async Task<IActionResult> GetAllCategories()
         {
             var result = await _categoryService.GetAllCategories();
-
+            if (result == null)
+            {
+                return StatusCode(404, "yalnis melumat");
+            }
             return Ok(result);
         }
 
@@ -28,7 +32,10 @@ namespace Api.Controllers
         public async Task<IActionResult> GetCategory(int id)
         {
             var result = await _categoryService.GetCategoryById(id);
-
+            if (result == null)
+            {
+                return StatusCode(404, "yalnis melumat");
+            }
             return Ok(result);
         }
 
@@ -36,7 +43,10 @@ namespace Api.Controllers
         public async Task<IActionResult> DeleteCategory(int id)
         {
             var result = await _categoryService.DeleteCategory(id);
-
+            if (result == null)
+            {
+                return StatusCode(404, "yalnis melumat");
+            }
             return Ok(result);  
 
         }
@@ -45,7 +55,12 @@ namespace Api.Controllers
         public async Task<IActionResult> CreateCategory(CreateCategoryDTO request)
         {
             var result = await _categoryService.CreateCategory(request);
-            return Ok(result);
+            if (result == null)
+            {
+                return StatusCode(404, "yalnis melumat");
+            }
+
+            return StatusCode(201,result);
 
         }
 
@@ -53,7 +68,14 @@ namespace Api.Controllers
         public async Task<IActionResult> UpdateCategory(EditCategoryDTO request)
         {
             var result = await _categoryService.UpdateCategory(request);
-            return Ok(result);
+            if (result == null)
+            {
+                return StatusCode(404, "yalnis melumat");
+            }
+            
+
+            
+            return StatusCode(200,result);
         }
 
     }

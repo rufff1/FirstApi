@@ -254,3 +254,4 @@ C:\Users\ROG\source\repos\Api\Api\bin\Debug\net7.0\ru\Microsoft.CodeAnalysis.Wor
 C:\Users\ROG\source\repos\Api\Api\bin\Debug\net7.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\ROG\source\repos\Api\Api\bin\Debug\net7.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\ROG\source\repos\Api\Api\bin\Debug\net7.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ROG\source\repos\Api\Api\bin\Debug\net7.0\CloudinaryDotNet.dll

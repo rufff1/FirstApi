@@ -5,6 +5,7 @@ using Api.Services.Abstract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 
 namespace Api.Controllers
 {
@@ -13,16 +14,21 @@ namespace Api.Controllers
     public class BlogController : ControllerBase
     {
         public readonly IBlogServicecs _blogServicecs;
-
-        public BlogController(IBlogServicecs blogServicecs) { 
+      
+        public BlogController(IBlogServicecs blogServicecs) 
+        { 
             _blogServicecs = blogServicecs;
-            
+          
+           
+
         }
 
 
         [HttpPost("CreateBlog")]
         public async Task<IActionResult> CreateBlog(CreateBlogDTO request)
         {
+
+
 
             try
             {

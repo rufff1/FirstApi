@@ -13,11 +13,15 @@ namespace Api.Entity
         public string Description { get; set; }
         public string Author { get; set; }
 
+
+
       
         public int CategoryId {  get; set; }
         public virtual Category Category { get; set; }
 
-        public ICollection<Tag> Tags {  get; set; } 
+
+
+        public ICollection<BlogTag> BlogTags {  get; set; } 
 
 
 
