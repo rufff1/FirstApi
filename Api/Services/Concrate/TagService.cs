@@ -24,16 +24,17 @@ namespace Api.Services.Concrate
         {
            var map = _mapper.Map<CreateTagDTO , Tag>(tag);
             map.CreateDate = DateTime.Now;
+            
             var addObj =await _context.Tags.AddAsync(map);
             var response =  _mapper.Map<Tag, CreateTagDTO>(addObj.Entity);
-
+              
             await _context.SaveChangesAsync();
             return response;
         }
 
-        public async Task<bool> DeleteTag(int tagId)
+        public async Task<bool> DeleteTag(int id)
         {
-            var result =await _context.Blogs.FindAsync(tagId);
+            var result =await _context.Blogs.FindAsync(id);
 
             if (result != null)
             {
@@ -63,6 +64,7 @@ namespace Api.Services.Concrate
                 return response;
 
             }
+        
             return null;
         }
 

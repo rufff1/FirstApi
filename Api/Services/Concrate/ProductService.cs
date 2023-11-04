@@ -26,7 +26,7 @@ namespace Api.Services.Concrate
             var map = _mapper.Map<CreateProductDTO, Product>(product);
             map.UpdateDate = DateTime.Now;
             map.CreateDate = DateTime.Now;
-            var addedObj = _context.Products.Add(map);
+            var addedObj = await _context.Products.AddAsync(map);
             var response = _mapper.Map<Product, CreateProductDTO>(addedObj.Entity);
 
             await _context.SaveChangesAsync();

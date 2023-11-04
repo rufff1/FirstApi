@@ -60,7 +60,7 @@ namespace Api.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("Blogs", (string)null);
+                    b.ToTable("Blogs");
                 });
 
             modelBuilder.Entity("Api.Entity.BlogTag", b =>
@@ -89,7 +89,7 @@ namespace Api.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("BlogTags", (string)null);
+                    b.ToTable("BlogTags");
                 });
 
             modelBuilder.Entity("Api.Entity.Category", b =>
@@ -116,7 +116,43 @@ namespace Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Api.Entity.News", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("News");
                 });
 
             modelBuilder.Entity("Api.Entity.Product", b =>
@@ -151,7 +187,7 @@ namespace Api.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Api.Entity.Tag", b =>
@@ -174,7 +210,7 @@ namespace Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags", (string)null);
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Api.Entity.Blog", b =>
@@ -211,6 +247,17 @@ namespace Api.Migrations
                     b.Navigation("Tag");
                 });
 
+            modelBuilder.Entity("Api.Entity.News", b =>
+                {
+                    b.HasOne("Api.Entity.Category", "Category")
+                        .WithMany("News")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("Api.Entity.Product", b =>
                 {
                     b.HasOne("Api.Entity.Category", "Category")
@@ -230,6 +277,8 @@ namespace Api.Migrations
             modelBuilder.Entity("Api.Entity.Category", b =>
                 {
                     b.Navigation("Blogs");
+
+                    b.Navigation("News");
 
                     b.Navigation("Products");
                 });

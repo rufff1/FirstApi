@@ -43,16 +43,14 @@ namespace Api.Controllers
         public async Task<IActionResult> DeleteCategory(int id)
         {
             var result = await _categoryService.DeleteCategory(id);
-            if (result == null)
-            {
-                return StatusCode(404, "yalnis melumat");
-            }
+     
+            
             return Ok(result);  
 
         }
 
         [HttpPost("CreateCategory")]
-        public async Task<IActionResult> CreateCategory(CreateCategoryDTO request)
+        public async Task<IActionResult> CreateCategory([FromBody]CreateCategoryDTO request)
         {
             var result = await _categoryService.CreateCategory(request);
             if (result == null)
@@ -65,7 +63,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("UpdateCategory")]
-        public async Task<IActionResult> UpdateCategory(EditCategoryDTO request)
+        public async Task<IActionResult> UpdateCategory([FromBody]EditCategoryDTO request)
         {
             var result = await _categoryService.UpdateCategory(request);
             if (result == null)

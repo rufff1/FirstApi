@@ -1,10 +1,13 @@
 ﻿using Api.Entity.Base;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Api.Entity
 {
     public class Product :BaseEntity
     {
+        [Key]
+
         public int Id { get; set; }
         public string ProductName { get; set; }
         [Column(TypeName ="Decimal")]

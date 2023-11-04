@@ -21,13 +21,24 @@ namespace Api.Controllers
         {
             var result = await _productService.GetAllProducts();
 
-            return Ok(result);  
+            if (result == null)
+            {
+                return StatusCode(404, "yalnis melumat");
+            }
+
+              return StatusCode(200,result);  
+
+            
+          
+
         }
 
         [HttpGet("GetUniqueProduct")]
         public async Task< IActionResult> GetProduct(int id)
         {
             var result = await _productService.GetProductById(id);
+
+            if (result == null) return StatusCode(404,"yalnis melumat");
             return Ok(result);
 
         }
@@ -36,6 +47,7 @@ namespace Api.Controllers
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var result = await _productService.DeleteProduct(id);
+          
             return Ok(result);
         }
 
@@ -43,6 +55,9 @@ namespace Api.Controllers
         public async Task<IActionResult> CreateProduct(CreateProductDTO request)
         {
             var result  = await _productService.CreateProduct(request);
+
+            if (result == null) return StatusCode(404,"yalnis melumat daxil edilib");
+           
 
             return Ok(result);
         }
@@ -52,6 +67,8 @@ namespace Api.Controllers
         {
             var result = await _productService.UpdateProduct(request);
 
+            if (result == null) return StatusCode(404, "yalnis melumat daxil edilib");
+         
             return Ok(result);
         }
     }

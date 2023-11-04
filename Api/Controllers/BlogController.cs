@@ -34,7 +34,7 @@ namespace Api.Controllers
             {
                 var result = await _blogServicecs.CreateBlog(request);
 
-                return Ok(result);
+                return StatusCode(201,result);
             }
             catch (Exception ex)
             {
@@ -42,7 +42,7 @@ namespace Api.Controllers
                
 
                
-                return StatusCode(500, $"{ex.Message}");
+                return StatusCode(404, $"{ex.Message}");
             }
 
        
@@ -58,7 +58,16 @@ namespace Api.Controllers
 
             var result = await _blogServicecs.EditBlog(requst);
 
-            return Ok(result);
+            if (result == null)
+            {
+                return StatusCode(404, "Yalnis melumat");
+            }
+            else
+            {
+
+               return Ok(result);
+            }
+
 
 
         }
@@ -67,6 +76,9 @@ namespace Api.Controllers
         public async Task<IActionResult> GetAllBlogs()
         {
             var result = await _blogServicecs.GetAllBlogs();
+
+            if (result == null) return StatusCode(200, "Emeliyyat ugurlu");
+
             return Ok(result);
         }
 
@@ -76,14 +88,14 @@ namespace Api.Controllers
             try
             {
                 var result = await _blogServicecs.GetBlogById(id);
-                return Ok(result);
+                return StatusCode(200,result);
 
             }
             
             catch (Exception ex)
             {
-             
-                  return StatusCode(500, $"Bu Id yalnisdir {ex.Message}");
+              
+                  return StatusCode(404, $"Bu Id yalnisdir {ex.Message}");
             }
 
            
@@ -99,7 +111,7 @@ namespace Api.Controllers
             }
             catch (Exception ex)
             {
-                   return StatusCode(500, $"{ex.Message}Yalnis melumat");
+                   return StatusCode(404, $"{ex.Message}Yalnis melumat");
 
             }
             return null;

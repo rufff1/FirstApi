@@ -11,5 +11,6 @@ namespace Api.Entity
         public string CategoryDescription { get; set; }
         public virtual List<Product> Products { get; set; }
         public virtual List<Blog> Blogs { get; set;}
+        public virtual List<News> News { get; set; }
     }
 }

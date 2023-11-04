@@ -5,6 +5,7 @@ using Api.DTO.TagDTO;
 
 using Api.Entity;
 using AutoMapper;
+using Api.DTO.NewsDTO;
 
 namespace Api.Mapping
 {
@@ -22,11 +23,15 @@ namespace Api.Mapping
 
             //Blog Mapping
             CreateMap<Blog , CreateBlogDTO>().ReverseMap();
-            CreateMap<Blog, EditBlogDTO>().ReverseMap();
+            CreateMap<Blog,  EditBlogDTO>().ReverseMap();
 
             //Tag Mapping
             CreateMap<Tag, CreateTagDTO>().ReverseMap();
             CreateMap<Tag, EditBlogDTO>().ReverseMap();
+
+            //News Mapping
+            CreateMap<News, CreateNewsDTO>().ReverseMap();
+            CreateMap<News, EditNewsDTO>().ReverseMap(); 
           
 
 

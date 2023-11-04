@@ -3,11 +3,14 @@ using Api.DataBaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.AspNetCore.Http.HttpResults;
+using System.ComponentModel.DataAnnotations;
 
 namespace Api.Entity
 {
     public class Blog : BaseEntity
     {
+        [Key]
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

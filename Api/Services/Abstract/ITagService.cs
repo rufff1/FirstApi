@@ -7,7 +7,7 @@ namespace Api.Services.Abstract
     {
         Task<CreateTagDTO> CreateTag(CreateTagDTO tag);
         Task<EditTagDTO> EditTag(EditTagDTO tag);
-        Task<bool> DeleteTag(int tagId);
+        Task<bool> DeleteTag(int id);
         Task<Tag> GetTagById(int id);
         Task<List<Tag>> GetAllTags();
     }
